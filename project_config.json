@@ -1,0 +1,7 @@
+{
+"logs_path":"C:\\Users\\Bliven\\baseballreference_datapull\\logs",
+"main_project_path":"C:\\Users\\Bliven\\baseballreference_datapull",
+"data_path":"C:\\Users\\Bliven\\baseballreference_datapull\\data",
+"sqlsvr":"DRIVER={SQL Server};Server=localhost\\SQLEXPRESS;Database=BaseballReference_Dev;Trusted_Connection=True;",
+"year":2021
+}

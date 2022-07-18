@@ -1,0 +1,17 @@
+dependencies:
+  - python=3.9.*
+  - pip
+  - beautifulsoup4
+  - pandas
+  - pyodbc
+  - jupyterlab
+  - sqlalchemy
+  - lxml
+  - pyarrow
+  - yaml
+  - pyyaml
+  - black
+  - isort
+  - jupyterlab_code_formatter
+  - pip:
+    - --editable .
