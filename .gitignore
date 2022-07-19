@@ -1,7 +1,8 @@
 env_*/
-data/
-logs/
 *.egg-info/
 .ipynb_checkpoints
+data/*
+logs/*
+!/.gitkeep
 !/*/.gitkeep
 !/*/*/.gitkeep
