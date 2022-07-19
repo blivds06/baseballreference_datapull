@@ -12,6 +12,5 @@ dependencies:
   - pyyaml
   - black
   - isort
-  - jupyterlab_code_formatter
   - pip:
     - --editable .

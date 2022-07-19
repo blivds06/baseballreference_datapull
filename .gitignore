@@ -1,4 +1,7 @@
 env_*/
 data/
 logs/
-support/bbref.egg-info/
+*.egg-info/
+.ipynb_checkpoints
+!/*/.gitkeep
+!/*/*/.gitkeep
