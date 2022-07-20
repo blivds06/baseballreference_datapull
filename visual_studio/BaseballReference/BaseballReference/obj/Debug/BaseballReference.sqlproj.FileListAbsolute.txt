@@ -1,0 +1,10 @@
+C:\Users\Bliven\baseballreference_datapull\visual_studio\BaseballReference\BaseballReference\bin\Debug\BaseballReference.dacpac
+C:\Users\Bliven\baseballreference_datapull\visual_studio\BaseballReference\BaseballReference\bin\Debug\BaseballReference.dll
+C:\Users\Bliven\baseballreference_datapull\visual_studio\BaseballReference\BaseballReference\bin\Debug\BaseballReference.pdb
+C:\Users\Bliven\baseballreference_datapull\visual_studio\BaseballReference\BaseballReference\obj\Debug\BaseballReference.sqlproj.AssemblyReference.cache
+C:\Users\Bliven\baseballreference_datapull\visual_studio\BaseballReference\BaseballReference\obj\Debug\Model.xml
+C:\Users\Bliven\baseballreference_datapull\visual_studio\BaseballReference\BaseballReference\obj\Debug\refactor.xml
+C:\Users\Bliven\baseballreference_datapull\visual_studio\BaseballReference\BaseballReference\obj\Debug\postdeploy.sql
+C:\Users\Bliven\baseballreference_datapull\visual_studio\BaseballReference\BaseballReference\obj\Debug\predeploy.sql
+C:\Users\Bliven\baseballreference_datapull\visual_studio\BaseballReference\BaseballReference\obj\Debug\BaseballReference.dll
+C:\Users\Bliven\baseballreference_datapull\visual_studio\BaseballReference\BaseballReference\obj\Debug\BaseballReference.pdb

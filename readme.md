@@ -13,13 +13,13 @@ Prerequirements:
     <li>Install Python</li>
     <li>Install SQL Server</li>
     <li>Install SQL Server Management Studio</li>
+    <li>Visual Studio (SSDT)</li>
     </ol>
     
 <i>Note: You will need to create your own SQL instance and database and have some familiarly with SQL Server. These instructions are not posted here.</i>
 
 How to run the programs:
-<ol><li>Open up SQL Server Management Studio. Open up the CreateObjects.sql script from the scripts folder and execute the script on your database. (Only need to do this once).<br>
-    <i>Behind the scenes: I utilize a DACPAC (Database Package) via Visual Studio SSDT on my end. For convenient sake of some users not being familiar with this concept, I provided the CreateObjects.sql script in the scripts folder which creates all the objects in an easy way.</i></li>
+<ol><li>Open up Visual Studio and go to the BaseballReference solution located within the visual studio folder. Apply the database package (DACPAC) to your local instance/database. <br>
     <li>Clone the GIT repository to a location on your computer.</li>
     <li>Open Anaconda Prompt</li>
     <li>Change directory to your location to where you stored the files<br><br>
