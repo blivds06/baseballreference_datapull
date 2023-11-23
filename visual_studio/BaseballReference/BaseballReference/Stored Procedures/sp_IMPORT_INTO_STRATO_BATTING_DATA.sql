@@ -1,6 +1,7 @@
-﻿CREATE PROCEDURE [dbo].[sp_IMPORT_INTO_STRATO_BATTING_DATA]
+CREATE PROCEDURE [dbo].[sp_IMPORT_INTO_STRATO_BATTING_DATA]
 
 AS
+
 
 IF OBJECT_ID('Tempdb..#PLAYERS_WITH_TOT') IS NOT NULL DROP TABLE #PLAYERS_WITH_TOT
 IF OBJECT_ID('Tempdb..#PLAYERS_WITHOUT_TOT') IS NOT NULL DROP TABLE #PLAYERS_WITHOUT_TOT
@@ -10,20 +11,26 @@ IF OBJECT_ID('Tempdb..#STRATO_BATTING_DATA') IS NOT NULL DROP TABLE #STRATO_BATT
 
 
 /* Players with a total Record*/
-Select Distinct Player_CDE
+Select Player_CDE
+,Min(Rk) as Rk
 ,'Y' as TotalRecord_IND
 Into #PLAYERS_WITH_TOT
 From STANDARD_BATTING_DATA
 Where Tm = 'TOT'
+Group By Player_CDE
+
 
 /* Players without a total Record*/
-Select Distinct S.Player_CDE
+Select S.Player_CDE
+,Min(S.Rk) as Rk
 ,'N' as TotalRecord_IND
 Into #PLAYERS_WITHOUT_TOT
 From STANDARD_BATTING_DATA S
 left join #PLAYERS_WITH_TOT P
 on S.Player_CDE = P.Player_CDE
 Where P.Player_CDE is null
+Group By S.Player_CDE
+
 
 Select COALESCE(LHP.Player_CDE,RHP.Player_CDE) as Player_CDE
 ,COALESCE(LHP.Tm,RHP.Tm) as Tm
@@ -124,11 +131,11 @@ Select S.Player_CDE
 From #PLAYERS_WITH_TOT PWT
 inner join STANDARD_BATTING_DATA S
 on PWT.Player_CDE = S.Player_CDE
+and PWT.Rk = S.Rk
 inner join PLATOON_SPLITS_BATTING_DATA P
-on S.Player_CDE = P.Player_CDE
+on PWT.Player_CDE = P.Player_CDE
 Where S.Tm = 'TOT'
-and S.Lg = 'MLB'
-and Split = 'vs LHP'
+and P.Split = 'vs LHP'
 ) LHP
 full outer join
 (
@@ -168,13 +175,18 @@ Select S.Player_CDE
 From #PLAYERS_WITH_TOT PWT
 inner join STANDARD_BATTING_DATA S
 on PWT.Player_CDE = S.Player_CDE
+and PWT.Rk = S.Rk
 inner join PLATOON_SPLITS_BATTING_DATA P
 on S.Player_CDE = P.Player_CDE
 Where S.Tm = 'TOT'
-and S.Lg = 'MLB'
 and Split = 'vs RHP'
 ) RHP
 on LHP.Player_CDE = RHP.Player_CDE
+
+
+/**********************************************************/
+
+/*****/
 
 Select COALESCE(LHP.Player_CDE,RHP.Player_CDE) as Player_CDE
 ,COALESCE(LHP.Tm,RHP.Tm) as Tm
@@ -356,7 +368,7 @@ Select S.[Rk]
 ,S.[SH]
 ,S.[SF]
 ,S.[IBB]
-,S.[Pos Summary]
+,S.[Pos Summary]
 ,S.[Player_CDE]
 ,A.[G-vsLHP]
 ,A.[GS-vsLHP]
