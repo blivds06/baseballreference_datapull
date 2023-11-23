@@ -1,6 +1,7 @@
-﻿CREATE PROCEDURE [dbo].[sp_IMPORT_INTO_STRATO_PITCHING_DATA]
+CREATE PROCEDURE [dbo].[sp_IMPORT_INTO_STRATO_PITCHING_DATA]
 
 AS
+
 
 IF OBJECT_ID('Tempdb..#PLAYERS_WITH_TOT') IS NOT NULL DROP TABLE #PLAYERS_WITH_TOT
 IF OBJECT_ID('Tempdb..#PLAYERS_WITHOUT_TOT') IS NOT NULL DROP TABLE #PLAYERS_WITHOUT_TOT
@@ -9,20 +10,24 @@ IF OBJECT_ID('Tempdb..#TOT_WITHOUT_SPLIT_DATA') IS NOT NULL DROP TABLE #TOT_WITH
 IF OBJECT_ID('Tempdb..#STRATO_PITCHING_DATA') IS NOT NULL DROP TABLE #STRATO_PITCHING_DATA
 
 /* Players with a total Record*/
-Select Distinct Player_CDE
+Select Player_CDE
+,MIN(Rk) as Rk
 ,'Y' as TotalRecord_IND
 Into #PLAYERS_WITH_TOT
 From STANDARD_PITCHING_DATA
 Where Tm = 'TOT'
+Group By Player_CDE
 
 /* Players without a total Record*/
-Select Distinct S.Player_CDE
+Select S.Player_CDE
+,Min(S.Rk) as Rk
 ,'N' as TotalRecord_IND
 Into #PLAYERS_WITHOUT_TOT
 From STANDARD_PITCHING_DATA S
 left join #PLAYERS_WITH_TOT P
 on S.Player_CDE = P.Player_CDE
 Where P.Player_CDE is null
+Group By S.Player_CDE
 
 Select COALESCE(LHB.Player_CDE,RHB.Player_CDE) as Player_CDE
 ,COALESCE(LHB.Tm,RHB.Tm) as Tm
@@ -119,10 +124,10 @@ Select S.Player_CDE
 From #PLAYERS_WITH_TOT PWT
 inner join STANDARD_PITCHING_DATA S
 on PWT.Player_CDE = S.Player_CDE
+and PWT.Rk = S.Rk
 inner join PLATOON_SPLITS_PITCHING_DATA P
 on S.Player_CDE = P.Player_CDE
 Where S.Tm = 'TOT'
-and S.Lg = 'MLB'
 and Split = 'vs LHB'
 ) LHB
 full outer join
@@ -162,14 +167,18 @@ Select S.Player_CDE
 From #PLAYERS_WITH_TOT PWT
 inner join STANDARD_PITCHING_DATA S
 on PWT.Player_CDE = S.Player_CDE
+and PWT.Rk = S.Rk
 inner join PLATOON_SPLITS_PITCHING_DATA P
 on S.Player_CDE = P.Player_CDE
 Where S.Tm = 'TOT'
-and S.Lg = 'MLB'
 and Split = 'vs RHB'
 ) RHB
 on LHB.Player_CDE = RHB.Player_CDE
 
+
+/**********************************************************/
+
+/*****/
 
 Select COALESCE(LHB.Player_CDE,RHB.Player_CDE) as Player_CDE
 ,COALESCE(LHB.Tm,RHB.Tm) as Tm
